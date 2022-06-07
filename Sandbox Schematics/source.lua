@@ -1,4 +1,4 @@
--- If you try to clown me on how the code looks, i honestly, do not. give. a. fuck. lmao
+-- If you try to clown me on how the code looks, i honestly, do not. give. a. fuck. lmao <3
 
 repeat wait() makefolder("sandboxSchematics") until isfolder("sandboxSchematics")
 getgenv()["IrisAd"] = true
