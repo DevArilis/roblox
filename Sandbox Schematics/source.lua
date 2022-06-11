@@ -1,5 +1,3 @@
--- If you try to clown me on how the code looks, i honestly, do not. give. a. fuck. lmao <3
-
 repeat wait() makefolder("sandboxSchematics") until isfolder("sandboxSchematics")
 getgenv()["IrisAd"] = true
 local Notification = loadstring(game:HttpGet("https://api.irisapp.ca/Scripts/IrisBetterNotifications.lua"))()
@@ -1590,10 +1588,13 @@ LagServerButton.MouseButton1Click:Connect(function()
     while wait() do
         if (getPlot(LocalPlayer) ~= nil) then
             local First = getPlot(LocalPlayer).Base:FindFirstChild('Block')
-            Remotes.PlacingEvent:FireServer(First.CFrame, "Block1", 0, First, Enum.NormalId.Top)
-	    Remotes.PlacingEvent:FireServer(First.CFrame, "Block1", 0, First, Enum.NormalId.Top)
-	    Remotes.PlacingEvent:FireServer(First.CFrame, "Block1", 0, First, Enum.NormalId.Top)
-	    Remotes.PlacingEvent:FireServer(First.CFrame, "Block1", 0, First, Enum.NormalId.Top)
+            for i=500 do
+                wait()
+                Remotes.PlacingEvent:FireServer(First.CFrame, "Block1", 0, First, Enum.NormalId.Top)
+                Remotes.PlacingEvent:FireServer(First.CFrame, "Block1", 0, First, Enum.NormalId.Top)
+                Remotes.PlacingEvent:FireServer(First.CFrame, "Block1", 0, First, Enum.NormalId.Top)
+            end
+            wipeBase()
         end
     end
 end)
