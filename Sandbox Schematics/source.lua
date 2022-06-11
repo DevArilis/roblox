@@ -1588,7 +1588,7 @@ LagServerButton.MouseButton1Click:Connect(function()
     while wait() do
         if (getPlot(LocalPlayer) ~= nil) then
             local First = getPlot(LocalPlayer).Base:FindFirstChild('Block')
-            for i=500 do
+            for i=1500 do
                 wait()
                 Remotes.PlacingEvent:FireServer(First.CFrame, "Block1", 0, First, Enum.NormalId.Top)
                 Remotes.PlacingEvent:FireServer(First.CFrame, "Block1", 0, First, Enum.NormalId.Top)
