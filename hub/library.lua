@@ -112,6 +112,7 @@ function library:new(window)
     end
 
     function inn:toggle(name, callback)
+	local callback = callback or function() end;
         local Toggle = Instance.new("TextButton")
         local ToggleColor = Instance.new("Frame")
         local UICorner_2 = Instance.new("UICorner")
@@ -149,23 +150,22 @@ function library:new(window)
         ToggleLabel.TextSize = 12.000
         ToggleLabel.TextStrokeTransparency = 0.800
         ToggleLabel.TextXAlignment = Enum.TextXAlignment.Left
-        local status = false
+        local toggle = false;
+
         Toggle.MouseButton1Click:Connect(function()
-            if (ToggleColor.BackgroundColor3 == Color3.fromRGB(238, 82, 83)) then
-                local goal = {}
-                goal.BackgroundColor3 = Color3.fromRGB(29, 209, 161)
-                local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Linear)
-                local tween = TweenService:Create(ToggleColor, tweenInfo, goal)
-                status = true
-                callback(status)
-            else
+            toggle = not toggle
+            if toggle then
                 local goal = {}
                 goal.BackgroundColor3 = Color3.fromRGB(238, 82, 83)
                 local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Linear)
                 local tween = TweenService:Create(ToggleColor, tweenInfo, goal)
-                status = false
-                callback(status)
-            end          
+            else
+		        local goal = {}
+			    goal.BackgroundColor3 = Color3.fromRGB(29, 209, 161)
+			    local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Linear)
+			    local tween = TweenService:Create(ToggleColor, tweenInfo, goal)
+            end
+            callback(toggle)
         end)
     end
     local size = UIListLayout.AbsoluteContentSize
