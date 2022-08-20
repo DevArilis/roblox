@@ -156,13 +156,13 @@ function library:new(window)
             toggle = not toggle
             if toggle then
                 local goal = {}
-                goal.BackgroundColor3 = Color3.fromRGB(238, 82, 83)
+                goal.BackgroundColor3 = Color3.fromRGB(29, 209, 161)
                 local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Linear)
                 local tween = TweenService:Create(ToggleColor, tweenInfo, goal)
                 tween:Play()
             else
 		local goal = {}
-		goal.BackgroundColor3 = Color3.fromRGB(29, 209, 161)
+		goal.BackgroundColor3 = Color3.fromRGB(238, 82, 83)
 		local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Linear)
 		local tween = TweenService:Create(ToggleColor, tweenInfo, goal)
                 tween:Play()
