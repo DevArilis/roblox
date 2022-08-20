@@ -9,7 +9,7 @@ local lib = {}
 lib.gui = Instance.new("ScreenGui")
 lib.gui.Parent = game:GetService('CoreGui')
 lib.gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-local guid = HttpService:GenerateGUID(false).."aASUdyhAK>NDAIshdiashbdnwb ACNBUSgyduyw AUISDGI OWGYDi"
+local guid = "aASUdyhAK>NDAIshdiashbdnwb ACNBUSgyduyw AUISDGI OWGYDi"
 local chars = {}
 for i=1,#guid,1 do
 	table.insert(chars, string.sub(guid, i, i))
