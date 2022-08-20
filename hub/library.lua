@@ -171,7 +171,7 @@ function library:new(window)
         end)
     end
     local size = UIListLayout.AbsoluteContentSize
-    Contents.CanvasSize = UDim2.new(0,0,0,size.Y)
+    Contents.CanvasSize = UDim2.new(0,0,size.Y,0)
     return inn
 end
 return library
