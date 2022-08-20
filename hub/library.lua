@@ -30,7 +30,7 @@ lib.Settings = {
 	VisibleKey = Enum.KeyCode.RightShift
 }
 
-function lib:NewWindow(name)
+function lib:NewWindow(name, y)
 	
 	local bg = Instance.new("Frame")
 	local header = Instance.new("Frame")
@@ -221,7 +221,7 @@ function lib:NewWindow(name)
 			end;
 		end);
 	end
-	bg.Size = UDim2.new(0, 200, 0, 240)
+	bg.Size = UDim2.new(0, 200, 0, y)
 	return innerlib
 end
 return lib	
