@@ -172,4 +172,4 @@ function library:new(window)
     Contents.CanvasSize = UDim2.new(0,0,0,size.Y)
     return inn
 end
-return lib
+return library
