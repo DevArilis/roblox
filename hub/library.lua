@@ -4,10 +4,10 @@ local LocalPlayer = game:GetService("Players").LocalPlayer
 local TweenService = game:GetService("TweenService")
 local HttpService = game:GetService('HttpService')
 
-local lib = {}
-lib.gui = Instance.new("ScreenGui")
-lib.gui.Parent = game:GetService('CoreGui')
-lib.gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+local library = {}
+library.gui = Instance.new("ScreenGui")
+library.gui.Parent = game:GetService('CoreGui')
+library.gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 local guid = "aASUdyhAK>NDAIshdiashbdnwb ACNBUSgyduyw AUISDGI OWGYDi"
 local chars = {}
 for i=1,#guid,1 do
@@ -23,16 +23,16 @@ local hash = ""
 for i,v in pairs(RandomizedTable) do
 	hash = hash..v
 end
-lib.gui.Name = hash
+library.gui.Name = hash
 
-function lib:new(window)
+function library:new(window)
     local bg = Instance.new("Frame")
     local UICorner = Instance.new("UICorner")
     local HeaderLabel = Instance.new("TextLabel")
     local Contents = Instance.new("ScrollingFrame")
     local UIListLayout = Instance.new("UIListLayout")    
     bg.Name = "bg"
-    bg.Parent = lib.gui
+    bg.Parent = library.gui
     bg.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
     bg.Position = UDim2.new(0.00594353629, 0, 0.351050675, 0)
     bg.Size = UDim2.new(0, 173, 0, 241)
