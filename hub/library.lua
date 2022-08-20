@@ -32,7 +32,7 @@ function lib:new(window)
     local Contents = Instance.new("ScrollingFrame")
     local UIListLayout = Instance.new("UIListLayout")    
     bg.Name = "bg"
-    bg.Parent = ScreenGui
+    bg.Parent = library.gui
     bg.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
     bg.Position = UDim2.new(0.00594353629, 0, 0.351050675, 0)
     bg.Size = UDim2.new(0, 173, 0, 241)
