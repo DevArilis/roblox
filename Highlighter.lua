@@ -12,7 +12,7 @@ function load:checkClass(instance)
 end
 
 function load:create(instance, fill, fillTransparency, out, vis)
-    if (not instance or not fill or not fillTransparency or not out or not vis) then error(string.format("[Highlighter]: An attempt to highlight '%s' was made but an argument was missing. (instance, fill color, fill transparency, outline color, visible")) return end
+    
     if (self:checkClass(instance) and not instance:FindFirstChildOfClass('Highlight')) then
         local Highlighter = Instance.new('Highlight', instance)
         Highlighter.Name = HttpService:GenerateGUID(false)
