@@ -17,7 +17,7 @@ function load:create(instance, fill, fillTransparency, out, vis)
         local Highlighter = Instance.new('Highlight', instance)
         Highlighter.Name = HttpService:GenerateGUID(false)
         Highlighter.Adornee = instance
-        if (vis) then Highlighter.DepthMode = "AlwaysOnTop" else Highlighter.DepthMode = "Occluded" end
+        if (not vis) then Highlighter.DepthMode = "AlwaysOnTop" else Highlighter.DepthMode = "Occluded" end
         Highlighter.FillColor = fill
         Highlighter.FillTransparency = fillTransparency
         Highlighter.OutlineColor = out
@@ -30,7 +30,7 @@ function load:edit(instance, fill, fillTransparency, out, vis)
         for i,v in pairs(instance:GetChildren()) do
             if (v:IsA('Highlight')) then
                 local Highlighter = v
-                if (vis) then Highlighter.DepthMode = "AlwaysOnTop" else Highlighter.DepthMode = "Occluded" end
+                if (not vis) then Highlighter.DepthMode = "AlwaysOnTop" else Highlighter.DepthMode = "Occluded" end
                 Highlighter.FillColor = fill
                 Highlighter.FillTransparency = fillTransparency
                 Highlighter.OutlineColor = out
