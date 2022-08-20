@@ -38,12 +38,13 @@ function lib:NewWindow(name)
 	local contents = Instance.new("Frame")
 	local UIGridLayout = Instance.new("UIGridLayout")
 
-	UIGridLayout.Parent = game.StarterGui.ScreenGui.bg.contents
+	UIGridLayout.Parent = contents
 	UIGridLayout.FillDirection = Enum.FillDirection.Vertical
 	UIGridLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 	UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
 	UIGridLayout.CellPadding = UDim2.new(0, 0, 0, 0)
 	UIGridLayout.CellSize = UDim2.new(0, 166, 0, 20)
+	
 	bg.Name = "bg"
 	bg.Parent = lib.gui
 	bg.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
