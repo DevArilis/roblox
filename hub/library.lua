@@ -169,7 +169,7 @@ function lib:new(window)
             end          
         end)
     end
-    Contents.CanvasSize = UDim2.new(0, 0, UIListLayout.AbsoluteContentSize.Y, 0)
+    Contents.CanvasSize = UDim2.new(0, 0, 0, UIListLayout.AbsoluteContentSize.Y)
     return inn
 end
 return lib
