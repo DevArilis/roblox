@@ -27,7 +27,7 @@ end
 function load:edit(instance, fill, fillTransparency, out, vis)
     if (not instance or not fill or not fillTransparency or not out or not vis) then error(string.format("[Highlighter]: An attempt to highlight '%s' was made but an argument was missing. (instance, fill color, fill transparency, outline color, visible")) return end
     if (self:checkClass(instance)) then
-        for i,v in pairs(instance) do
+        for i,v in pairs(instance:GetChildren()) do
             if (v:IsA('Highlight')) then
                 local Highlighter = v
                 if (vis) then Highlighter.DepthMode = "AlwaysOnTop" else Highlighter.DepthMode = "Occluded" end
@@ -42,7 +42,7 @@ end
 function load:remove(instance)
     if (not instance) then error(string.format("[Highlighter]: An attempt to highlight '%s' was made but an argument was missing. (instance")) return end
     if (self:checkClass(instance)) then
-        for i,v in pairs(instance) do
+        for i,v in pairs(instance:GetChildren()) do
             if (v:IsA('Highlight')) then
                 v:Destroy()
             end
