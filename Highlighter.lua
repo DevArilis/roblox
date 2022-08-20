@@ -51,3 +51,4 @@ function load:remove(instance)
 end
 
 return load
+--test
