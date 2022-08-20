@@ -221,7 +221,7 @@ function lib:NewWindow(name)
 			end;
 		end);
 	end
-	bg.Size = UDim2.new(0, 200, 0, UIGridLayout.AbsoluteContentSize.Y)
+	bg.Size = UDim2.new(0, 200, 0, 240)
 	return innerlib
 end
 return lib	
