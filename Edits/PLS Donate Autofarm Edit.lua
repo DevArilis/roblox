@@ -154,7 +154,7 @@ local function update()
     end
         text = string.gsub(getgenv().settings.customBoothText, "$C", current)
         text = string.gsub (text, "$G", goal)
-        boothText = tostring('<font color="'.. getgenv().settings.hexBox.. '">'.. text.. '</font>')
+        boothText = tostring('<stroke color="#2A0030" thickness="1"><font size="90"><font face="Bangers"><font color="'.. getgenv().settings.hexBox.. '">'.. text.. '</font></font></font></stroke>')
     --Updates the booth text
     local myBooth = Players.LocalPlayer.PlayerGui.MapUIContainer.MapUI.BoothUI:FindFirstChild(tostring("BoothUI".. unclaimed[1]))
     if myBooth.Sign.TextLabel.Text ~= boothText then
