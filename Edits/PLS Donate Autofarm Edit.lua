@@ -204,7 +204,7 @@ for i,v in pairs(game.Players:GetPlayers()) do
     end
 end
 
-if (totalRaised <=10000) then
+if (totalRaised <=5000) then
     serverHop()
 end
 
