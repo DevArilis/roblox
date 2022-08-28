@@ -75,7 +75,7 @@ if isfile("plsdonatesettings.txt") then
     getgenv().settings = httpservice:JSONDecode(readfile('plsdonatesettings.txt'))
 end
 local sNames = {"textUpdateToggle", "textUpdateDelay", "serverHopToggle", "serverHopDelay", "hexBox", "goalBox", "webhookToggle", "webhookBox", "danceToggle", "thanksMessage", "signToggle", "customBoothText", "signUpdateToggle", "signText", "signHexBox", "autoThanks", "autoBeg", "begMessage", "begDelay", "fpsLimit", "render"}
-local sValues = {true, 30, true, 30, "#32CD32", 5, false, "", false, {"Thank you", "Thanks!", "ty :)", "tysm!"}, false, "GOAL: $C / $G", false, "your text here", "#ffffff", true, false, {"Please donate", "I'm so close to my goal!", "donate to me", "please"}, 300, 60, false}
+local sValues = {true, 30, true, 30, "#00f6ff", 5, false, "", false, {"Thank you", "Thanks!", "ty :)", "tysm!"}, false, "GOAL: $C / $G", false, "your text here", "#ffffff", true, false, {"Please donate", "I'm so close to my goal!", "donate to me", "please"}, 300, 60, false}
 if #getgenv().settings ~= sNames then
     for i, v in ipairs(sNames) do
         if getgenv().settings[v] == nil then
@@ -154,7 +154,7 @@ local function update()
     end
         text = string.gsub(getgenv().settings.customBoothText, "$C", current)
         text = string.gsub (text, "$G", goal)
-        boothText = tostring('<stroke color="#2A0030" thickness="1"><font size="90"><font face="Bangers"><font color="'.. getgenv().settings.hexBox.. '">'.. text.. '</font></font></font></stroke>')
+        boothText = tostring('<stroke color="#FF0000" thickness="1"><font size="90"><font face="Bangers"><font color="'.. getgenv().settings.hexBox.. '">'.. text.. '</font></font></font></stroke>')
     --Updates the booth text
     local myBooth = Players.LocalPlayer.PlayerGui.MapUIContainer.MapUI.BoothUI:FindFirstChild(tostring("BoothUI".. unclaimed[1]))
     if myBooth.Sign.TextLabel.Text ~= boothText then
