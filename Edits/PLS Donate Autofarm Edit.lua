@@ -595,7 +595,7 @@ end
 Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(Players.LocalPlayer.Character.HumanoidRootPart.Position, Vector3.new(40, 14, 101)))
 if getgenv().settings.danceToggle then
     wait(1)
-    Players:Chat("/e dance")
+    Players:Chat("/e dance3")
 end
 if getgenv().settings.textUpdateToggle and getgenv().settings.customBoothText then
     update()
