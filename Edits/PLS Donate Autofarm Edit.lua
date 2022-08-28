@@ -199,7 +199,7 @@ local function serverHop()
 end
 local totalRaised = 0
 for i,v in pairs(game.Players:GetPlayers()) do
-    if (v ~= game.Players.LocalPlayer) then
+    if (v ~= game.Players.LocalPlayer and Players[v.Name]:FindFirstChild('leaderstats') and Players[v.Name].leaderstats:FindFirstChild('Donated')) then
         totalRaised = totalRaised + tonumber(Players[v.Name].leaderstats.Donated.Value)
     end
 end
