@@ -13,14 +13,24 @@ end
 
 function load:create(instance, fill, fillTransparency, out, vis)
     
-    if (self:checkClass(instance) and not instance:FindFirstChildOfClass('Highlight')) then
-        local Highlighter = Instance.new('Highlight', instance)
-        Highlighter.Name = HttpService:GenerateGUID(false)
-        Highlighter.Adornee = instance
-        if (not vis) then Highlighter.DepthMode = "AlwaysOnTop" else Highlighter.DepthMode = "Occluded" end
-        Highlighter.FillColor = fill
-        Highlighter.FillTransparency = fillTransparency
-        Highlighter.OutlineColor = out
+    if (self:checkClass(instance)) then
+        if (not instance:FindFirstChildOfClass('Highlight')) then
+            local Highlighter = Instance.new('Highlight', instance)
+            Highlighter.Name = HttpService:GenerateGUID(false)
+            Highlighter.Adornee = instance
+            if (not vis) then Highlighter.DepthMode = "AlwaysOnTop" else Highlighter.DepthMode = "Occluded" end
+            Highlighter.FillColor = fill
+            Highlighter.FillTransparency = fillTransparency
+            Highlighter.OutlineColor = out
+        elseif (instance:FindFirstChildOfClass('Highlight') and instance:FindFirstChildOfClass('Highlight').OutlineColor ~= out) then
+            local Highlighter = instance:FindFirstChildOfClass('Highlight')
+            Highlighter.Name = HttpService:GenerateGUID(false)
+            Highlighter.Adornee = instance
+            if (not vis) then Highlighter.DepthMode = "AlwaysOnTop" else Highlighter.DepthMode = "Occluded" end
+            Highlighter.FillColor = fill
+            Highlighter.FillTransparency = fillTransparency
+            Highlighter.OutlineColor = out
+        end 
     end
 end
 
