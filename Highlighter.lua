@@ -22,7 +22,7 @@ function load:create(instance, fill, fillTransparency, out, vis)
             Highlighter.FillColor = fill
             Highlighter.FillTransparency = fillTransparency
             Highlighter.OutlineColor = out
-        elseif (instance:FindFirstChildOfClass('Highlight') and instance:FindFirstChildOfClass('Highlight').OutlineColor ~= out) then
+        elseif (instance:FindFirstChildOfClass('Highlight') and instance:FindFirstChildOfClass('Highlight').OutlineColor ~= out and instance:FindFirstChildOfClass('Highlight').FillColor ~= fill and instance:FindFirstChildOfClass('Highlight').FillTransparency ~= fillTransparency) then
             local Highlighter = instance:FindFirstChildOfClass('Highlight')
             Highlighter.Name = HttpService:GenerateGUID(false)
             Highlighter.Adornee = instance
