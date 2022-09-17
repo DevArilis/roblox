@@ -131,7 +131,7 @@ ESPSettingsGroupBox:AddLabel('Perk Machine Color'):AddColorPicker('PerkColor', {
     Title = 'Perk Machine Color', -- Optional. Allows you to have a custom color picker title (when you open it)
 })
 ESPSettingsGroupBox:AddLabel('Power Color'):AddColorPicker('PowerColor', {
-    Default = Color3.fromRGB(252, 92, 101), -- Bright green
+    Default = Color3.fromRGB(255, 255, 255), -- Bright green
     Title = 'Power Color', -- Optional. Allows you to have a custom color picker title (when you open it)
 })
 
