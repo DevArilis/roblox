@@ -84,6 +84,10 @@ BoxGroupBox:AddToggle('PerkESPEnabled', {
     Text = 'Perk Machines',
     Default = false, -- Default value (true / false)
 })
+BoxGroupBox:AddToggle('PowerEnabled', {
+    Text = 'Power Switch',
+    Default = false, -- Default value (true / false)
+})
 
 ESPGroupBox:AddToggle('ESPEnable', {
     Text = 'Enable ESP',
@@ -125,6 +129,10 @@ ESPSettingsGroupBox:AddLabel('Mystery Box Color'):AddColorPicker('MysteryBoxColo
 ESPSettingsGroupBox:AddLabel('Perk Machine Color'):AddColorPicker('PerkColor', {
     Default = Color3.fromRGB(252, 92, 101), -- Bright green
     Title = 'Perk Machine Color', -- Optional. Allows you to have a custom color picker title (when you open it)
+})
+ESPSettingsGroupBox:AddLabel('Power Color'):AddColorPicker('PowerColor', {
+    Default = Color3.fromRGB(252, 92, 101), -- Bright green
+    Title = 'Power Color', -- Optional. Allows you to have a custom color picker title (when you open it)
 })
 
 local AimbotFOVCircle = Drawing.new("Circle")
@@ -218,6 +226,31 @@ loop = RunService.RenderStepped:Connect(function()
     end
    
 end)
+
+function createPowerESP(v)
+    local Name = Drawing.new("Text")
+    local Updater = RunService.RenderStepped:Connect(function()
+        if (v:FindFirstChild('Switch')) then
+            local Target2dPosition,IsVisible = Camera:WorldToViewportPoint(v.Switch.Position)
+            local scale_factor = 1 / (Target2dPosition.Z * math.tan(math.rad(Camera.FieldOfView * 0.5)) * 2) * 100
+            local width, height = math.floor(40 * scale_factor), math.floor(60 * scale_factor)
+           
+            if (Toggles.PowerEnabled.Value) then
+                Name.Visible = IsVisible
+                Name.Color = Options.PowerColor.Value
+                Name.Text = "Power ["..math.floor((Camera.CFrame.p - v.Switch.Position).magnitude).."m]"
+                Name.Center = true
+                Name.Outline = Toggles.PowerEnabled.Value
+                Name.OutlineColor = Color3.new(0,0,0)
+                Name.Position = Vector2.new(Target2dPosition.X,Target2dPosition.Y - height * 0.5 + -15)
+                Name.Font = GlobalFont
+                Name.Size = 12
+            else
+                Name.Visible = false
+            end   
+        end
+    end)
+end
 
 function createPerkESP(v)
     local Name = Drawing.new("Text")
@@ -321,6 +354,12 @@ function CreateEsp(v)
             end   
         end
     end)
+end
+
+for _,v in pairs(workspace:GetChildren()) do
+    if (v.Name == 'Power' and v:FindFirstChild('Switch')) then
+        createPowerESP(v)
+    end
 end
 
 for _,v in pairs(workspace.Scriptable:GetChildren()) do
