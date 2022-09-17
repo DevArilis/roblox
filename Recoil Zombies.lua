@@ -1,1 +1,366 @@
-if setclipboard then setclipboard('https://discord.gg/wuKrst9d2W')end;local a=game:GetService("UserInputService")local b=Drawing.Fonts.Monospace;local c=game:GetService('Players')local d=c.LocalPlayer;local e=d:GetMouse()local f=game:GetService('ReplicatedStorage')local g=game:GetService('RunService')local h=game:GetService("TweenService")local i=workspace.CurrentCamera;local j=i.worldToViewportPoint;local k=Vector3.new(0,0.75,0)local l=Vector3.new(0,3,0)local m='https://raw.githubusercontent.com/wally-rblx/LinoriaLib/main/'local n=loadstring(game:HttpGet(m..'Library.lua'))()local o=loadstring(game:HttpGet(m..'addons/ThemeManager.lua'))()local p=loadstring(game:HttpGet(m..'addons/SaveManager.lua'))()local q=n:CreateWindow({Title='[ari.lol] Recoil Zombies',Center=true,AutoShow=true})local r={Aimbot=q:AddTab('Aimbot'),Visuals=q:AddTab('Visuals'),Miscellaneous=q:AddTab('Miscellaneous'),['UI Settings']=q:AddTab('UI Settings')}local s=r.Aimbot:AddLeftGroupbox('Aimbot')local t=r.Aimbot:AddRightGroupbox('Aimbot Settings')local u=r.Visuals:AddLeftGroupbox('ESP')local v=r.Visuals:AddRightGroupbox('ESP Settings')local w=r.Visuals:AddRightGroupbox('FOV')s:AddToggle('AimbotEnabled',{Text='Enable Aimbot',Default=false})s:AddToggle('AimbotFOVEnable',{Text='Enable FOV',Default=false})t:AddToggle('AimbotVisibleEnabled',{Text='Visible Only',Default=false})t:AddSlider('AimbotSmoothing',{Text='Smoothing',Default=1,Min=0.1,Max=1,Rounding=1,Compact=false})t:AddLabel('FOV Color'):AddColorPicker('AimbotFOVColor',{Default=Color3.fromRGB(247,143,179),Title='FOV Color'})t:AddSlider('AimbotFOV',{Text='FOV',Default=1,Min=1,Max=360,Rounding=0,Compact=false})u:AddToggle('ESPEnable',{Text='Enable ESP',Default=false})u:AddToggle('BoxesEnabled',{Text='Boxes',Default=false})u:AddToggle('NametagsEnabled',{Text='Nametags',Default=false})u:AddToggle('DistanceEnabled',{Text='Distance',Default=false})u:AddSlider('ESPDistance',{Text='ESP Distance',Default=400,Min=10,Max=400,Rounding=1,Compact=false})w:AddSlider('CameraFOV',{Text='FOV',Default=70,Min=70,Max=120,Rounding=0,Compact=true})Options.CameraFOV:OnChanged(function()i.FieldOfView=Options.CameraFOV.Value end)v:AddToggle('ESPVisibleCheck',{Text='Visible Only',Default=false})v:AddLabel('Box Color'):AddColorPicker('BoxColor',{Default=Color3.fromRGB(247,143,179),Title='Box Color'})v:AddLabel('Name Tag Color'):AddColorPicker('NametagColor',{Default=Color3.fromRGB(247,143,179),Title='Nametag Color'})local x=Drawing.new("Circle")x.Visible=Toggles.AimbotFOVEnable.Value;x.Thickness=2;x.Radius=Options.AimbotFOV.Value;x.Transparency=1;x.Color=Options.AimbotFOVColor.Value;x.Position=workspace.CurrentCamera.ViewportSize/2;Toggles.AimbotFOVEnable:OnChanged(function()x.Visible=Toggles.AimbotFOVEnable.Value end)Options.AimbotFOV:OnChanged(function()x.Radius=Options.AimbotFOV.Value end)Options.AimbotFOVColor:OnChanged(function()x.Color=Options.AimbotFOVColor.Value end)local function y(z)local A=i:WorldToScreenPoint(z.Position)return Vector2.new(A.X,A.Y)end;local function B(C,D)return Ray.new(C,(D-C).Unit*600)end;local function E()return Vector2.new(e.X,e.Y)end;local function F(z)local F=i:WorldToScreenPoint(z.Position)return F end;local function G(H)local I=Ray.new(H.Position,H.LookVector).Unit;local J={'Head'}local K=nil;local L=math.huge;local M=nil;for N,O in pairs(workspace.ClientZambies:GetChildren())do if O.PrimaryPart then for P,Q in pairs(O:GetChildren())do if table.find(J,Q.Name)and Q:IsA('Part')then local R=(O[Q.Name].Position-I:ClosestPoint(O[Q.Name].Position)).Magnitude;if R<L then L=R;K=O;M=Q end end end end end;return K,M end;loop=g.RenderStepped:Connect(function()i.FieldOfView=Options.CameraFOV.Value;local S=a:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)local T=workspace.CurrentCamera;local U=workspace.CurrentCamera.ViewportSize/2;if S and Toggles.AimbotEnabled.Value then local V,M=G(T.CFrame)if V then local W=T:WorldToScreenPoint(M.Position)W=Vector2.new(W.X,W.Y)if(W-U).Magnitude<Options.AimbotFOV.Value then if Toggles.AimbotVisibleEnabled.Value then if isPartVisible(V,V.Character)then workspace.CurrentCamera.CFrame=workspace.CurrentCamera.CFrame:Lerp(CFrame.new(T.CFrame.Position,M.Position),1.1-Options.AimbotSmoothing.Value)end else workspace.CurrentCamera.CFrame=workspace.CurrentCamera.CFrame:Lerp(CFrame.new(T.CFrame.Position,M.Position),1.1-Options.AimbotSmoothing.Value)end end end end end)function CreateEsp(O)local X,Y,Z=Drawing.new("Square"),Drawing.new("Square"),Drawing.new("Text")local _=g.RenderStepped:Connect(function()if not workspace.ClientZambies:FindFirstChild(O.Name)then X.Visible=false;Y.Visible=false;Z.Visible=false end;if O:FindFirstChild('Head')and O.PrimaryPart then local a0,a1=i:WorldToViewportPoint(O.PrimaryPart.Position)local a2=1/(a0.Z*math.tan(math.rad(i.FieldOfView*0.5))*2)*100;local a3,a4=math.floor(40*a2),math.floor(60*a2)if Toggles.BoxesEnabled.Value then X.Visible=a1;X.Color=Options.BoxColor.Value;X.Size=Vector2.new(a3,a4)X.Position=Vector2.new(a0.X-X.Size.X/2,a0.Y-X.Size.Y/2)X.Thickness=1;X.ZIndex=69;Y.Visible=false;Y.Color=Options.BoxColor.Value;Y.Size=Vector2.new(a3,a4)Y.Position=Vector2.new(a0.X-X.Size.X/2,a0.Y-X.Size.Y/2)Y.Thickness=3;Y.ZIndex=1 else X.Visible=false;Y.Visible=false end;if Toggles.NametagsEnabled.Value then Z.Visible=a1;Z.Color=Options.NametagColor.Value;if Toggles.DistanceEnabled.Value then Z.Text="Zombie ["..math.floor((i.CFrame.p-O.PrimaryPart.Position).magnitude).."m]"else Z.Text="Zombie"end;Z.Center=true;Z.Outline=Toggles.NametagsEnabled.Value;Z.OutlineColor=Color3.new(0,0,0)Z.Position=Vector2.new(a0.X,a0.Y-a4*0.5+-15)Z.Font=b;Z.Size=12 else Z.Visible=false end end end)end;for a5,O in pairs(workspace.ClientZambies:GetChildren())do CreateEsp(O)end;workspace.ClientZambies.ChildAdded:Connect(function(O)CreateEsp(O)end)n:SetWatermarkVisibility(true)n:SetWatermark(string.format('ari.lol | Recoil Zombies'))n.KeybindFrame.Visible=false;local a6=r['UI Settings']:AddLeftGroupbox('Menu')a6:AddLabel('Menu bind'):AddKeyPicker('MenuKeybind',{Default='RightShift',NoUI=true,Text='Toggle UI'})n.ToggleKeybind=Options.MenuKeybind;o:SetLibrary(n)p:SetLibrary(n)p:IgnoreThemeSettings()p:SetIgnoreIndexes({'MenuKeybind'})o:SetFolder('ari.lol')p:SetFolder('ari.lol/recoil zombies')p:BuildConfigSection(r['UI Settings'])o:ApplyToTab(r['UI Settings'])p:LoadAutoloadConfig()
+if (setclipboard) then setclipboard('https://discord.gg/wuKrst9d2W') end
+local UserInputService = game:GetService("UserInputService")
+local GlobalFont = Drawing.Fonts.Monospace
+local Players = game:GetService('Players')
+local LocalPlayer = Players.LocalPlayer
+local Mouse = LocalPlayer:GetMouse()
+local ReplicatedStorage = game:GetService('ReplicatedStorage')
+local RunService = game:GetService('RunService')
+local TweenService = game:GetService("TweenService")
+local Camera = workspace.CurrentCamera
+local WorldToViewPoint = Camera.worldToViewportPoint
+local HeadOff = Vector3.new(0, 0.75, 0)
+local LegOff = Vector3.new(0,3,0)
+local repo = 'https://raw.githubusercontent.com/wally-rblx/LinoriaLib/main/'
+local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))()
+local ThemeManager = loadstring(game:HttpGet(repo .. 'addons/ThemeManager.lua'))()
+local SaveManager = loadstring(game:HttpGet(repo .. 'addons/SaveManager.lua'))()
+
+
+local Window = Library:CreateWindow({
+    -- Set Center to true if you want the menu to appear in the center
+    -- Set AutoShow to true if you want the menu to appear when it is created
+    -- Position and Size are also valid options here
+    -- but you do not need to define them unless you are changing them :)
+
+    Title = '[ari.lol] Recoil Zombies',
+    Center = true, 
+    AutoShow = true,
+})
+local Tabs = {
+    -- Creates a new tab titled Main
+    Aimbot = Window:AddTab('Aimbot'),
+    Visuals = Window:AddTab('Visuals'), 
+    ['UI Settings'] = Window:AddTab('UI Settings'),
+}
+local AimbotGroupBox = Tabs.Aimbot:AddLeftGroupbox('Aimbot')
+local AimbotSettingsGroupBox = Tabs.Aimbot:AddRightGroupbox('Aimbot Settings')
+local ESPGroupBox = Tabs.Visuals:AddLeftGroupbox('Zombie ESP')
+local BoxGroupBox = Tabs.Visuals:AddLeftGroupbox('Map ESP')
+local ESPSettingsGroupBox = Tabs.Visuals:AddRightGroupbox('ESP Settings')
+
+
+AimbotGroupBox:AddToggle('AimbotEnabled', {
+    Text = 'Enable Aimbot',
+    Default = false, -- Default value (true / false)
+    
+})
+AimbotGroupBox:AddToggle('AimbotFOVEnable', {
+    Text = 'Enable FOV',
+    Default = false, -- Default value (true / false)
+    
+})
+AimbotSettingsGroupBox:AddToggle('AimbotVisibleEnabled', {
+    Text = 'Visible Only',
+    Default = false, -- Default value (true / false)
+    
+})
+AimbotSettingsGroupBox:AddSlider('AimbotSmoothing', {
+    Text = 'Smoothing',
+    Default = 1,
+    Min = 0.1,
+    Max = 1,
+    Rounding = 1,
+    Compact = false
+})
+AimbotSettingsGroupBox:AddLabel('FOV Color'):AddColorPicker('AimbotFOVColor', {
+    Default = Color3.fromRGB(247, 143, 179), -- Bright green
+    Title = 'FOV Color', -- Optional. Allows you to have a custom color picker title (when you open it)
+})
+AimbotSettingsGroupBox:AddSlider('AimbotFOV', {
+    Text = 'FOV',
+    Default = 1,
+    Min = 1,
+    Max = 360,
+    Rounding = 0,
+    Compact = false
+})
+
+BoxGroupBox:AddToggle('BoxEnabled', {
+    Text = 'Mystery Box',
+    Default = false, -- Default value (true / false)
+})
+BoxGroupBox:AddToggle('PerkESPEnabled', {
+    Text = 'Perk Machines',
+    Default = false, -- Default value (true / false)
+})
+
+ESPGroupBox:AddToggle('ESPEnable', {
+    Text = 'Enable ESP',
+    Default = false, -- Default value (true / false)
+    
+})
+ESPGroupBox:AddToggle('BoxesEnabled', {
+    Text = 'Boxes',
+    Default = false, -- Default value (true / false)
+    
+})
+ESPGroupBox:AddToggle('NametagsEnabled', {
+    Text = 'Nametags',
+    Default = false, -- Default value (true / false)
+    
+})
+ESPGroupBox:AddToggle('DistanceEnabled', {
+    Text = 'Distance',
+    Default = false, -- Default value (true / false)
+    
+})
+ESPSettingsGroupBox:AddToggle('ESPVisibleCheck', {
+    Text = 'Visible Only',
+    Default = false, -- Default value (true / false)
+    
+})
+ESPSettingsGroupBox:AddLabel('Box Color'):AddColorPicker('BoxColor', {
+    Default = Color3.fromRGB(247, 143, 179), -- Bright green
+    Title = 'Box Color', -- Optional. Allows you to have a custom color picker title (when you open it)
+})
+ESPSettingsGroupBox:AddLabel('Name Tag Color'):AddColorPicker('NametagColor', {
+    Default = Color3.fromRGB(247, 143, 179), -- Bright green
+    Title = 'Nametag Color', -- Optional. Allows you to have a custom color picker title (when you open it)
+})
+ESPSettingsGroupBox:AddLabel('Mystery Box Color'):AddColorPicker('MysteryBoxColor', {
+    Default = Color3.fromRGB(165, 94, 234), -- Bright green
+    Title = 'Mystery Box Color', -- Optional. Allows you to have a custom color picker title (when you open it)
+})
+ESPSettingsGroupBox:AddLabel('Perk Machine Color'):AddColorPicker('PerkColor', {
+    Default = Color3.fromRGB(252, 92, 101), -- Bright green
+    Title = 'Perk Machine Color', -- Optional. Allows you to have a custom color picker title (when you open it)
+})
+
+local AimbotFOVCircle = Drawing.new("Circle")
+AimbotFOVCircle.Visible = Toggles.AimbotFOVEnable.Value
+AimbotFOVCircle.Thickness = 2
+AimbotFOVCircle.Radius = Options.AimbotFOV.Value
+AimbotFOVCircle.Transparency = 1
+AimbotFOVCircle.Color = Options.AimbotFOVColor.Value
+AimbotFOVCircle.Position = workspace.CurrentCamera.ViewportSize/2
+
+
+Toggles.AimbotFOVEnable:OnChanged(function()
+    AimbotFOVCircle.Visible = Toggles.AimbotFOVEnable.Value
+end)
+
+Options.AimbotFOV:OnChanged(function()
+    AimbotFOVCircle.Radius = Options.AimbotFOV.Value
+end)
+
+Options.AimbotFOVColor:OnChanged(function()
+    AimbotFOVCircle.Color = Options.AimbotFOVColor.Value
+end)
+
+local function WTS(Object)
+    local ObjectVector = Camera:WorldToScreenPoint(Object.Position)
+    return Vector2.new(ObjectVector.X, ObjectVector.Y)
+end
+
+local function PositionToRay(Origin, Target)
+    return Ray.new(Origin, (Target - Origin).Unit * 600)
+end
+local function MousePositionToVector2()
+    return Vector2.new(Mouse.X, Mouse.Y)
+end
+
+local function IsOnScreen(Object)
+    local IsOnScreen = Camera:WorldToScreenPoint(Object.Position)
+    return IsOnScreen
+end
+
+
+local function getClosest(cframe)
+    local ray = Ray.new(cframe.Position, cframe.LookVector).Unit
+    local BodyParts = {'Head'}
+    local target = nil
+    local mag = math.huge
+    local bp = nil
+    for i,v in pairs(workspace.ClientZambies:GetChildren()) do
+        if (v.PrimaryPart) then
+            for x,z in pairs(v:GetChildren()) do
+                if (table.find(BodyParts, z.Name) and z:IsA('Part')) then
+                    local magBuf = (v[z.Name].Position - ray:ClosestPoint(v[z.Name].Position)).Magnitude
+                    if magBuf < mag then
+                        mag = magBuf
+                        target = v
+                        bp = z
+                    end
+                end
+            end
+        end
+    end
+
+    
+    return target, bp
+end
+
+
+loop = RunService.RenderStepped:Connect(function()
+    local pressed = --[[UserInputService:IsKeyDown(Enum.KeyCode.E)]] UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)
+    local cam = workspace.CurrentCamera
+    local zz = workspace.CurrentCamera.ViewportSize/2
+    
+    if pressed and Toggles.AimbotEnabled.Value then
+        local curTar, bp = getClosest(cam.CFrame)
+        if (curTar) then
+            local ssHeadPoint = cam:WorldToScreenPoint(bp.Position)
+            ssHeadPoint = Vector2.new(ssHeadPoint.X, ssHeadPoint.Y)
+            if (ssHeadPoint - zz).Magnitude < Options.AimbotFOV.Value then
+                if (Toggles.AimbotVisibleEnabled.Value) then
+                    if (isPartVisible(curTar, curTar.Character)) then
+                        workspace.CurrentCamera.CFrame = workspace.CurrentCamera.CFrame:Lerp(CFrame.new(cam.CFrame.Position, bp.Position), 1.1 - Options.AimbotSmoothing.Value)
+                        --workspace.CurrentCamera.CFrame = CFrame.new(cam.CFrame.Position, curTar.Character[bp].Position)
+                    end
+                else
+                    workspace.CurrentCamera.CFrame = workspace.CurrentCamera.CFrame:Lerp(CFrame.new(cam.CFrame.Position, bp.Position), 1.1 - Options.AimbotSmoothing.Value)
+                    --workspace.CurrentCamera.CFrame = CFrame.new(cam.CFrame.Position, curTar.Character[bp].Position)
+                end
+                
+            end
+        end
+    end
+   
+end)
+
+function createPerkESP(v)
+    local Name = Drawing.new("Text")
+    local Updater = RunService.RenderStepped:Connect(function()
+        if (v:FindFirstChild('PerkLogo')) then
+            local Target2dPosition,IsVisible = Camera:WorldToViewportPoint(v.PerkLogo.Position)
+            local scale_factor = 1 / (Target2dPosition.Z * math.tan(math.rad(Camera.FieldOfView * 0.5)) * 2) * 100
+            local width, height = math.floor(40 * scale_factor), math.floor(60 * scale_factor)
+           
+            if (Toggles.PerkESPEnabled.Value) then
+                Name.Visible = IsVisible
+                Name.Color = Options.PerkColor.Value
+                Name.Text = v.Name.." ["..math.floor((Camera.CFrame.p - v.PerkLogo.Position).magnitude).."m]"
+                Name.Center = true
+                Name.Outline = Toggles.PerkESPEnabled.Value
+                Name.OutlineColor = Color3.new(0,0,0)
+                Name.Position = Vector2.new(Target2dPosition.X,Target2dPosition.Y - height * 0.5 + -15)
+                Name.Font = GlobalFont
+                Name.Size = 12
+            else
+                Name.Visible = false
+            end   
+        end
+    end)
+end
+
+function createBoxESP(v)
+    local Name = Drawing.new("Text")
+    local Updater = RunService.RenderStepped:Connect(function()
+        if (not workspace:FindFirstChild("MagicBox")) then
+            Name.Visible = false
+        end
+        if (v:FindFirstChild('Light') and v.PrimaryPart) then
+            local Target2dPosition,IsVisible = Camera:WorldToViewportPoint(v.PrimaryPart.Position)
+            local scale_factor = 1 / (Target2dPosition.Z * math.tan(math.rad(Camera.FieldOfView * 0.5)) * 2) * 100
+            local width, height = math.floor(40 * scale_factor), math.floor(60 * scale_factor)
+           
+            if (Toggles.BoxEnabled.Value) then
+                Name.Visible = IsVisible
+                Name.Color = Options.MysteryBoxColor.Value
+                Name.Text = "Mystery Box ["..math.floor((Camera.CFrame.p - v.PrimaryPart.Position).magnitude).."m]"
+                Name.Center = true
+                Name.Outline = Toggles.BoxEnabled.Value
+                Name.OutlineColor = Color3.new(0,0,0)
+                Name.Position = Vector2.new(Target2dPosition.X,Target2dPosition.Y - height * 0.5 + -15)
+                Name.Font = GlobalFont
+                Name.Size = 12
+            else
+                Name.Visible = false
+            end   
+        end
+    end)
+end
+
+function CreateEsp(v)
+    local Box,BoxOutline,Name = Drawing.new("Square"),Drawing.new("Square"),Drawing.new("Text")
+    local Updater = RunService.RenderStepped:Connect(function()
+        if (not workspace.ClientZambies:FindFirstChild(v.Name)) then
+            Box.Visible = false
+            BoxOutline.Visible = false
+            Name.Visible = false
+        end
+        if (v:FindFirstChild('Head') and v.PrimaryPart) then
+            local Target2dPosition,IsVisible = Camera:WorldToViewportPoint(v.PrimaryPart.Position)
+            local scale_factor = 1 / (Target2dPosition.Z * math.tan(math.rad(Camera.FieldOfView * 0.5)) * 2) * 100
+            local width, height = math.floor(40 * scale_factor), math.floor(60 * scale_factor)
+           
+            if (Toggles.BoxesEnabled.Value) then
+                Box.Visible = IsVisible
+                Box.Color = Options.BoxColor.Value
+                Box.Size = Vector2.new(width,height)
+                Box.Position = Vector2.new(Target2dPosition.X - Box.Size.X / 2,Target2dPosition.Y - Box.Size.Y / 2)
+                Box.Thickness = 1
+                Box.ZIndex = 69
+                BoxOutline.Visible = false
+                BoxOutline.Color = Options.BoxColor.Value
+                BoxOutline.Size = Vector2.new(width,height)
+                BoxOutline.Position = Vector2.new(Target2dPosition.X - Box.Size.X / 2,Target2dPosition.Y - Box.Size.Y / 2)
+                BoxOutline.Thickness = 3
+                BoxOutline.ZIndex = 1
+            else
+                Box.Visible = false
+                BoxOutline.Visible = false
+            end
+            if (Toggles.NametagsEnabled.Value) then
+                Name.Visible = IsVisible
+                Name.Color = Options.NametagColor.Value
+                if (Toggles.DistanceEnabled.Value) then
+                    Name.Text = "Zombie ["..math.floor((Camera.CFrame.p - v.PrimaryPart.Position).magnitude).."m]"
+                else                        
+                    Name.Text = "Zombie"
+                end
+                Name.Center = true
+                Name.Outline = Toggles.NametagsEnabled.Value
+                Name.OutlineColor = Color3.new(0,0,0)
+                Name.Position = Vector2.new(Target2dPosition.X,Target2dPosition.Y - height * 0.5 + -15)
+                Name.Font = GlobalFont
+                Name.Size = 12
+            else
+                Name.Visible = false
+            end   
+        end
+    end)
+end
+
+for _,v in pairs(workspace.Scriptable:GetChildren()) do
+    if (v:FindFirstChild('PerkLogo')) then
+        createPerkESP(v)
+    end
+end
+
+for _,v in pairs(workspace:GetChildren()) do
+    if (v.Name == 'MagicBox') then
+        createBoxESP(v)
+    end
+end
+
+workspace.ChildAdded:Connect(function(v)
+    if (v.Name == 'Magic Box') then
+        createBoxESP(v)
+    end
+end)
+
+for _,v in pairs(workspace.ClientZambies:GetChildren()) do
+    CreateEsp(v)
+end
+ 
+workspace.ClientZambies.ChildAdded:Connect(function(v)
+    CreateEsp(v)
+end)
+
+Library:SetWatermarkVisibility(true)
+Library:SetWatermark(string.format('ari.lol | Recoil Zombies'))
+Library.KeybindFrame.Visible = false; -- todo: add a function for this
+local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('Menu')
+MenuGroup:AddLabel('Menu bind'):AddKeyPicker('MenuKeybind', { Default = 'RightShift', NoUI = true, Text = 'Toggle UI' }) 
+Library.ToggleKeybind = Options.MenuKeybind -- Allows you to have a custom keybind for the menu
+ThemeManager:SetLibrary(Library)
+SaveManager:SetLibrary(Library)
+SaveManager:IgnoreThemeSettings() 
+SaveManager:SetIgnoreIndexes({ 'MenuKeybind' }) 
+ThemeManager:SetFolder('ari.lol')
+SaveManager:SetFolder('ari.lol/recoil zombies')
+SaveManager:BuildConfigSection(Tabs['UI Settings']) 
+ThemeManager:ApplyToTab(Tabs['UI Settings'])
+SaveManager:LoadAutoloadConfig()
