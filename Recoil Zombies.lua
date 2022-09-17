@@ -212,7 +212,7 @@ loop = RunService.RenderStepped:Connect(function()
             ssHeadPoint = Vector2.new(ssHeadPoint.X, ssHeadPoint.Y)
             if (ssHeadPoint - zz).Magnitude < Options.AimbotFOV.Value then
                 if (Toggles.AimbotVisibleEnabled.Value) then
-                    if (isPartVisible(curTar, curTar.Character)) then
+                    if (isPartVisible(curTar, curTar)) then
                         workspace.CurrentCamera.CFrame = workspace.CurrentCamera.CFrame:Lerp(CFrame.new(cam.CFrame.Position, bp.Position), 1.1 - Options.AimbotSmoothing.Value)
                         --workspace.CurrentCamera.CFrame = CFrame.new(cam.CFrame.Position, curTar.Character[bp].Position)
                     end
@@ -325,7 +325,9 @@ function CreateEsp(v)
                 Box.Position = Vector2.new(Target2dPosition.X - Box.Size.X / 2,Target2dPosition.Y - Box.Size.Y / 2)
                 Box.Thickness = 1
                 Box.ZIndex = 69
+                Box.Filled = false
                 BoxOutline.Visible = false
+                BoxOutline.Filled = false
                 BoxOutline.Color = Options.BoxColor.Value
                 BoxOutline.Size = Vector2.new(width,height)
                 BoxOutline.Position = Vector2.new(Target2dPosition.X - Box.Size.X / 2,Target2dPosition.Y - Box.Size.Y / 2)
